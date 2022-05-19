@@ -1,0 +1,26 @@
+name: github-push
+
+on:
+  workflow_dispatch:
+
+jobs:
+  gitpush:
+    name: "gitpush"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: gitenv
+        run: |
+          git config --global user.name "endbugger"
+          git config --global user.email "islammominul.ihemal@gmail.com"
+          git config --global credential.helper store
+
+      - name: run script
+        run: bash push.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          
