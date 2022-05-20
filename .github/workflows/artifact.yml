@@ -1,0 +1,32 @@
+name: artifact uploader
+
+on:
+  workflow_dispatch:
+
+jobs:
+  artifact-upload:
+    name: "artifact-upload"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: gitenv
+        run: |
+          git config --global user.name "endbugger"
+          git config --global user.email "islammominul.ihemal@gmail.com"
+          git config --global credential.helper store
+
+      - name: run script
+        run: |
+          cd ${HOME}
+          git clone https://github.com/endbugger/android_kernel_xiaomi_laurel_sprout
+          tar cf -  -v android_kernel_xiaomi_laurel_sprout | 7z a -si -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on android_kernel_xiaomi_laurel_sprout.tar.7z 
+          cp *.tar.7z /tmp/
+
+      - name: upload kernel tarball
+        uses: actions/upload-artifact@v3
+        with:
+          name: android_kernel_xiaomi_laurel_sprout
+          path: tmp/android_kernel_xiaomi_laurel_sprout.tar.7z
