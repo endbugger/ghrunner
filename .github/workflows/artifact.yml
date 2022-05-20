@@ -29,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android_kernel_xiaomi_laurel_sprout
-          path: tmp/android_kernel_xiaomi_laurel_sprout.tar.7z
+          files: /tmp/android_kernel_xiaomi_laurel_sprout.tar.7z
