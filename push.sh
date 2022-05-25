@@ -1,16 +1,11 @@
 #!/bin/bash
 
-mkdir -p ${HOME}/android_kernel_xiaomi_laurel_sprout
-cd ${HOME}/android_kernel_xiaomi_laurel_sprout
-git init
-git remote add micode https://github.com/MiCode/Xiaomi_Kernel_OpenSource
-git fetch micode laurel-r-oss
-git checkout -b laurel-r-oss micode/laurel-r-oss
-
-curl -i -H "Authorization: token ${GH_TOKEN}" \
-https://api.github.com/user/repos \
--d '{"name": "'"android_kernel_xiaomi_laurel_sprout"'","description": "'"laurel_sprout(Mi A3) R kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}'
-
-git push https://"${GH_TOKEN}"@github.com/endbugger/android_kernel_xiaomi_laurel_sprout.git "laurel-r-oss" --force
-
-
+cd ${HOME}
+git clone --depth=1 https://github.com/AndroidDumps/dumpyara
+cd dumpyara
+bash setup.sh
+sudo apt install aria2
+aria2c https://bigota.d.miui.com/V12.0.22.0.RFQMIXM/laurel_sprout_global_images_V12.0.22.0.RFQMIXM_20220410.0000.00_11.0_52cedbee59.tgz
+sed -i 's/ORG=AndroidDumps/ORG=endbugger/g' dumpyara.sh
+sed -i 's/orgs/user/g' dumpyara.sh
+bash dumpyara.sh laurel_sprout_global_images_V12.0.22.0.RFQMIXM_20220410.0000.00_11.0_52cedbee59.tgz "${GH_TOKEN}"
