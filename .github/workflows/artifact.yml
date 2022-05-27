@@ -21,7 +21,8 @@ jobs:
       - name: run script
         run: |
           cd ${HOME}
-          wget https://bigota.d.miui.com/V13.0.2.0.SKHMIXM/alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb.tgz
+          sudo apt install aria2
+          aria2c https://bigota.d.miui.com/V13.0.2.0.SKHMIXM/alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb.tgz >/dev/null
           tar xf alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb.tgz
           cd ali* || cd alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb
           pt=$(find . -name partition.xml)
