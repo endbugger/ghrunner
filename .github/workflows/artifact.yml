@@ -21,12 +21,14 @@ jobs:
       - name: run script
         run: |
           cd ${HOME}
-          git clone https://github.com/endbugger/android_kernel_xiaomi_laurel_sprout
-          tar cf -  -v android_kernel_xiaomi_laurel_sprout | 7z a -si -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on android_kernel_xiaomi_laurel_sprout.tar.7z 
-          cp *.tar.7z /tmp/
+          wget https://bigota.d.miui.com/V13.0.2.0.SKHMIXM/alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb.tgz
+          tar xf alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb.tgz
+          cd ali* || cd alioth_global_images_V13.0.2.0.SKHMIXM_20220314.0000.00_12.0_global_c5673c5cdb
+          pt=$(find . -name partition.xml)
+          cp ${pt} /tmp
 
-      - name: upload kernel tarball
+      - name: upload 
         uses: actions/upload-artifact@v3
         with:
-          name: android_kernel_xiaomi_laurel_sprout
-          path: /tmp/android_kernel_xiaomi_laurel_sprout.tar.7z
+          name: partition xml
+          path: /tmp/partition.xml
